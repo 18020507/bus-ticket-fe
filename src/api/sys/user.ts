@@ -6,30 +6,38 @@ import { ErrorMessageMode } from '/#/axios';
 enum Api {
   Login = '/login',
   Logout = '/logout',
-  GetUserInfo = '/getUserInfo',
+  GetUserInfo = '/user_detail',
   GetPermCode = '/getPermCode',
 }
 
 /**
  * @description: user login api
  */
-export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') {
-  return defHttp.post<LoginResultModel>(
+export async function loginApi(params: LoginParams, mode: ErrorMessageMode = 'none') {
+  const res = await defHttp.post(
     {
       url: Api.Login,
-      params,
+      params: {
+        username_id: params.username,
+        password: params.password,
+      },
     },
     {
       errorMessageMode: mode,
+      isReturnNativeResponse: true,
     },
   );
+  return res.data as LoginResultModel;
 }
 
 /**
  * @description: getUserInfo
  */
-export function getUserInfo() {
-  return defHttp.get<GetUserInfoModel>({ url: Api.GetUserInfo }, { errorMessageMode: 'none' });
+export async function getUserInfo() {
+  const res = await defHttp.get({ url: Api.GetUserInfo }, { errorMessageMode: 'none' });
+  console.log('res', res);
+
+  return res as GetUserInfoModel;
 }
 
 export function getPermCode() {

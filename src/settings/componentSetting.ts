@@ -11,11 +11,11 @@ export default {
       // The field name of the current page passed to the background
       pageField: 'page',
       // The number field name of each page displayed in the background
-      sizeField: 'pageSize',
+      sizeField: 'page_size',
       // Field name of the form data returned by the interface
-      listField: 'items',
+      listField: 'data',
       // Total number of tables returned by the interface field name
-      totalField: 'total',
+      totalField: 'metadata.total_items',
     },
     // Number of pages that can be selected
     pageSizeOptions: ['10', '50', '80', '100'],
@@ -47,5 +47,18 @@ export default {
     // Whether to use native scroll bar
     // After opening, the menu, modal, drawer will change the pop-up scroll bar to native
     native: false,
+  },
+  basicForm: {
+    defaultLabelWidth: 170,
+    defaultActionColOptions: {
+      span: 24,
+    },
+    defaultLabelCol: {},
+    defaultWrapperCol: {},
+    defaultColProps: { xs: 24, md: 24, xl: 12 },
+    defaultRowProps: {
+      gutter: 32,
+    },
+    labelAlign: 'left',
   },
 };

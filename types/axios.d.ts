@@ -29,7 +29,8 @@ export interface Result<T = any> {
   code: number;
   type: 'success' | 'error' | 'warning';
   message: string;
-  result: T;
+  data: T;
+  metadata?: Record<string, any>;
 }
 
 // multipart/form-data: upload file

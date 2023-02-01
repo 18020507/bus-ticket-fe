@@ -5,6 +5,7 @@ import type { TableActionType } from '/@/components/Table';
 import type { ButtonProps } from 'ant-design-vue/es/button/buttonTypes';
 import type { RowProps } from 'ant-design-vue/lib/grid/Row';
 import { propTypes } from '/@/utils/propTypes';
+import componentSetting from '/@/settings/componentSetting';
 
 export const basicProps = {
   model: {
@@ -14,7 +15,7 @@ export const basicProps = {
   // 标签宽度  固定宽度
   labelWidth: {
     type: [Number, String] as PropType<number | string>,
-    default: 0,
+    default: componentSetting.basicForm.defaultLabelWidth,
   },
   fieldMapToTime: {
     type: Array as PropType<FieldMapToTime>,
@@ -35,6 +36,7 @@ export const basicProps = {
   },
   baseColProps: {
     type: Object as PropType<Partial<ColEx>>,
+    default: componentSetting.basicForm.defaultColProps,
   },
   autoSetPlaceHolder: propTypes.bool.def(true),
   // 在INPUT组件上单击回车时，是否自动提交
@@ -65,7 +67,10 @@ export const basicProps = {
   // 是否显示操作按钮
   showActionButtonGroup: propTypes.bool.def(true),
   // 操作列Col配置
-  actionColOptions: Object as PropType<Partial<ColEx>>,
+  actionColOptions: {
+    type: Object as PropType<Partial<ColEx>>,
+    default: componentSetting.basicForm.defaultActionColOptions,
+  },
   // 显示重置按钮
   showResetButton: propTypes.bool.def(true),
   // 是否聚焦第一个输入框，只在第一个表单项为input的时候作用
@@ -85,18 +90,29 @@ export const basicProps = {
   // 以下为默认props
   hideRequiredMark: propTypes.bool,
 
-  labelCol: Object as PropType<Partial<ColEx>>,
-
+  labelCol: {
+    type: Object as PropType<Partial<ColEx>>,
+    default: componentSetting.basicForm.defaultLabelCol,
+  },
   layout: propTypes.oneOf(['horizontal', 'vertical', 'inline']).def('horizontal'),
   tableAction: {
     type: Object as PropType<TableActionType>,
   },
 
-  wrapperCol: Object as PropType<Partial<ColEx>>,
+  wrapperCol: {
+    type: Object as PropType<Partial<ColEx>>,
+    default: componentSetting.basicForm.defaultWrapperCol,
+  },
 
   colon: propTypes.bool,
 
-  labelAlign: propTypes.string,
+  labelAlign: {
+    type: String,
+    default: componentSetting.basicForm.labelAlign,
+  },
 
-  rowProps: Object as PropType<RowProps>,
+  rowProps: {
+    type: Object as PropType<RowProps>,
+    default: componentSetting.basicForm.defaultRowProps,
+  },
 };

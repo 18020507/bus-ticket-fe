@@ -52,7 +52,7 @@
         {{ t('sys.login.registerButton') }}
       </Button> -->
     </FormItem>
-    <ARow class="enter-x">
+    <!-- <ARow class="enter-x">
       <ACol :md="8" :xs="24">
         <Button block @click="setLoginState(LoginStateEnum.MOBILE)">
           {{ t('sys.login.mobileSignInFormTitle') }}
@@ -68,30 +68,24 @@
           {{ t('sys.login.registerButton') }}
         </Button>
       </ACol>
-    </ARow>
+    </ARow> -->
+<!-- 
+    <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider> -->
 
-    <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider>
-
-    <div class="flex justify-evenly enter-x" :class="`${prefixCls}-sign-in-way`">
+    <!-- <div class="flex justify-evenly enter-x" :class="`${prefixCls}-sign-in-way`">
       <GithubFilled />
       <WechatFilled />
       <AlipayCircleFilled />
       <GoogleCircleFilled />
       <TwitterCircleFilled />
-    </div>
+    </div> -->
   </Form>
 </template>
 <script lang="ts" setup>
   import { reactive, ref, unref, computed } from 'vue';
 
-  import { Checkbox, Form, Input, Row, Col, Button, Divider } from 'ant-design-vue';
-  import {
-    GithubFilled,
-    WechatFilled,
-    AlipayCircleFilled,
-    GoogleCircleFilled,
-    TwitterCircleFilled,
-  } from '@ant-design/icons-vue';
+  import { Checkbox, Form, Input, Row, Col, Button} from 'ant-design-vue';
+
   import LoginFormTitle from './LoginFormTitle.vue';
 
   import { useI18n } from '/@/hooks/web/useI18n';
@@ -119,8 +113,8 @@
   const rememberMe = ref(false);
 
   const formData = reactive({
-    account: 'vben',
-    password: '123456',
+    account: '',
+    password: '',
   });
 
   const { validForm } = useFormValid(formRef);
@@ -139,6 +133,7 @@
         username: data.account,
         mode: 'none', //不要默认的错误提示
       });
+      console.log(userInfo, '123123');
       if (userInfo) {
         notification.success({
           message: t('sys.login.loginSuccessTitle'),

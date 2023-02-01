@@ -6,15 +6,14 @@ import { RoleEnum } from '/@/enums/roleEnum';
 import { PageEnum } from '/@/enums/pageEnum';
 import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
 import { getAuthCache, setAuthCache } from '/@/utils/auth';
-import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
-import { doLogout, getUserInfo, loginApi } from '/@/api/sys/user';
+import { LoginParams } from '/@/api/sys/model/userModel';
+import { getUserInfo, loginApi } from '/@/api/sys/user';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { router } from '/@/router';
 import { usePermissionStore } from '/@/store/modules/permission';
 import { RouteRecordRaw } from 'vue-router';
 import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
-import { isArray } from '/@/utils/is';
 import { h } from 'vue';
 
 interface UserState {
@@ -87,20 +86,22 @@ export const useUserStore = defineStore({
         goHome?: boolean;
         mode?: ErrorMessageMode;
       },
-    ): Promise<GetUserInfoModel | null> {
+    ): Promise<UserInfo | null> {
       try {
         const { goHome = true, mode, ...loginParams } = params;
         const data = await loginApi(loginParams, mode);
-        const { token } = data;
+        const { access_token } = data;
+
+        console.log(data);
 
         // save token
-        this.setToken(token);
+        this.setToken(access_token);
         return this.afterLoginAction(goHome);
       } catch (error) {
         return Promise.reject(error);
       }
     },
-    async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
+    async afterLoginAction(goHome?: boolean): Promise<UserInfo | null> {
       if (!this.getToken) return null;
       // get user info
       const userInfo = await this.getUserInfoAction();
@@ -125,16 +126,34 @@ export const useUserStore = defineStore({
     async getUserInfoAction(): Promise<UserInfo | null> {
       if (!this.getToken) return null;
       const userInfo = await getUserInfo();
-      const { roles = [] } = userInfo;
-      if (isArray(roles)) {
-        const roleList = roles.map((item) => item.value) as RoleEnum[];
-        this.setRoleList(roleList);
-      } else {
-        userInfo.roles = [];
-        this.setRoleList([]);
-      }
-      this.setUserInfo(userInfo);
-      return userInfo;
+      // const { roles = [] } = userInfo;
+      // if (isArray(roles)) {
+      //   const roleList = roles.map((item) => item.value) as RoleEnum[];
+      //   this.setRoleList(roleList);
+      // } else {
+      //   userInfo.roles = [];
+      //   this.setRoleList([]);
+      // }
+      // this.setUserInfo(userInfo);
+      // return userInfo;
+
+      // const { roles = [] } = userInfo;
+      // if (isArray(roles)) {
+      //   const roleList = roles.map((item) => item.value) as RoleEnum[];
+      //   this.setRoleList(roleList);
+      // } else {
+      //   userInfo.roles = [];
+      //   this.setRoleList([]);
+      // }
+      const info: UserInfo = {
+        userId: userInfo.id,
+        username: userInfo.email,
+        realName: userInfo.full_name,
+        avatar: '',
+        roles: [],
+      };
+      this.setUserInfo(info);
+      return info;
     },
     /**
      * @description: logout
@@ -142,7 +161,7 @@ export const useUserStore = defineStore({
     async logout(goLogin = false) {
       if (this.getToken) {
         try {
-          await doLogout();
+          // await doLogout();
         } catch {
           console.log('注销Token失败');
         }

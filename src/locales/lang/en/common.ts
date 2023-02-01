@@ -9,7 +9,7 @@ export default {
   searchText: 'Search',
   queryText: 'Search',
 
-  inputText: 'Please enter',
+  inputText: 'Please enter ',
   chooseText: 'Please choose',
 
   redo: 'Refresh',
