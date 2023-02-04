@@ -20,7 +20,7 @@
   import { useRootSetting } from '/@/hooks/setting/useRootSetting';
   import { onMountedOrActivated } from '/@/hooks/core/onMountedOrActivated';
 
-  type Lang = 'zh_CN' | 'en_US' | 'ja_JP' | 'ko_KR' | undefined;
+  type Lang = 'en_US' | 'ja_JP' | 'ko_KR' | undefined;
 
   export default defineComponent({
     inheritAttrs: false,
@@ -65,7 +65,7 @@
         },
       );
 
-      const getCurrentLang = computed((): 'zh_CN' | 'en_US' | 'ja_JP' | 'ko_KR' => {
+      const getCurrentLang = computed((): 'en_US' | 'ja_JP' | 'ko_KR' => {
         let lang: Lang;
         switch (unref(getLocale)) {
           case 'en':
@@ -78,7 +78,7 @@
             lang = 'ko_KR';
             break;
           default:
-            lang = 'zh_CN';
+            lang = 'en_US';
         }
         return lang;
       });
