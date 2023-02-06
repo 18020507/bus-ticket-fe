@@ -13,7 +13,8 @@
         />
       </template>
     </BasicTable>
-    <ModalPaymentTicket @register="registerModal" @submit-success="reload" />
+    <ModalPaymentTicket @register="registerModal" @submit-success="handleOpenPaymentTicketDetail" />
+    <ModalPaymentTicketDetail @register="registerModalDetail" @submit-success="reload" />
   </div>
 </template>
 
@@ -25,11 +26,13 @@
   import * as BusScheduleApi from '/@/api/bus-schedule/api';
   import { ISearchBusSchedule } from '/@/api/bus-schedule/model';
   import { ModalPaymentTicket } from '/@/views/bus-schedule/components/modal-payment-ticket';
+  import { ModalPaymentTicketDetail } from '/@/views/bus-schedule/components/modal-payment-ticket-detail';
 
   import { filterSchema } from './filter.data';
   import { getColumns } from './table.data';
 
   const [registerModal, { openModal }] = useModal();
+  const [registerModalDetail, { openModal: openModalDetail }] = useModal();
   const isTwoWay = ref(false);
 
   const columns = computed(() => getColumns(unref(isTwoWay)));
@@ -56,4 +59,7 @@
   const handlePaymentTicket = (record) => {
     openModal(true, record);
   };
+  const handleOpenPaymentTicketDetail = (formData) => {
+    openModalDetail(true, formData);
+  }
 </script>

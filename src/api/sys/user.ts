@@ -17,6 +17,9 @@ export async function loginApi(params: LoginParams, mode: ErrorMessageMode = 'no
   const res = await defHttp.post(
     {
       url: Api.Login,
+      headers: {
+        'content-type': 'application/json',
+      },
       params: {
         username_id: params.username,
         password: params.password,

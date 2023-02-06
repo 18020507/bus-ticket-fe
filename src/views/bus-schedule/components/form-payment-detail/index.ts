@@ -1,0 +1,1 @@
+export { default as FormPaymentDetail } from './src/FormPaymentDetail.vue';

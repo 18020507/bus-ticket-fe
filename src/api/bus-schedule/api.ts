@@ -5,7 +5,7 @@ import { ISearchBusSchedule } from './model';
 enum Api {
   ListSchedule = '/bus_schedule',
   ListTravelFrom = '/list_travel_from_field',
-  ListTravelTo = '/list_travel_to_field'
+  ListTravelTo = '/list_travel_to_field',
 }
 
 /**

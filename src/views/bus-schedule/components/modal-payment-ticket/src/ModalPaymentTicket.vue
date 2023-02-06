@@ -2,7 +2,7 @@
   <BasicModal
     width="75%"
     title="Payment ticket"
-    okText="Payment"
+    okText="Go to payment page"
     @register="register"
     @close="handleClose"
     @ok="handlePayment"
@@ -15,17 +15,12 @@
   import { ref, unref } from 'vue';
 
   import { BasicModal, useModalInner } from '/@/components/Modal';
-  import { FormTicketInfo } from '/@/views/bus-schedule/components/form-ticket-info';
   import { useUserStore } from '/@/store/modules/user';
-  import { useMessage } from '/@/hooks/web/useMessage';
-
-  import * as TicketApi from '/@/api/ticket/api';
+  import { FormTicketInfo} from '../../form-ticket-info';
 
   const emit = defineEmits(['register', 'submit-success']);
 
   const formTicketInfoRef = ref();
-
-  const { createMessage } = useMessage();
 
   const [register, { closeModal }] = useModalInner((data) => {
     const routeStart = [
@@ -56,9 +51,9 @@
       number_of_passenger: form.passengers,
       bus_id: form.id,
     };
-    await TicketApi.createTicket(formData);
-    createMessage.success('Payment success');
-    emit('submit-success');
+    // await TicketApi.createTicket(formData);
+    // createMessage.success('Payment success');
+    emit('submit-success', formData);
     handleClose();
   };
 
