@@ -3,7 +3,7 @@
     width="60%"
     :height="1000"
     title="Payment ticket"
-    okText="Go to payment page"
+    okText="Pay"
     @register="register"
     @close="handleClose"
     @ok="handlePayment"
@@ -18,8 +18,10 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { useUserStore } from '/@/store/modules/user';
   import { FormPaymentDetail } from '../../form-payment-detail';
+  import { useMessage } from '/@/hooks/web/useMessage';
 
   const emit = defineEmits(['register', 'submit-success']);
+  const { createMessage } = useMessage();
 
   const formTicketInfoRef = ref();
 
@@ -30,11 +32,12 @@
   const userStore = useUserStore();
 
   const handlePayment = () => {
-
-  }
+    createMessage.success('Payment success');
+    emit('submit-success');
+    handleClose();
+  };
 
   const handleClose = () => {
     closeModal();
-    unref(formTicketInfoRef)?.resetFields();
   };
 </script>

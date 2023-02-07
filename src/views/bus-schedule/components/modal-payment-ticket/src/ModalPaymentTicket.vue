@@ -17,6 +17,7 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { useUserStore } from '/@/store/modules/user';
   import { FormTicketInfo} from '../../form-ticket-info';
+  import * as TicketApi from '/@/api/ticket/api';
 
   const emit = defineEmits(['register', 'submit-success']);
 
@@ -51,7 +52,7 @@
       number_of_passenger: form.passengers,
       bus_id: form.id,
     };
-    // await TicketApi.createTicket(formData);
+    await TicketApi.createTicket(formData);
     // createMessage.success('Payment success');
     emit('submit-success', formData);
     handleClose();
